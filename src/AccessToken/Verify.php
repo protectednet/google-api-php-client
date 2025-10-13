@@ -96,6 +96,8 @@ class Verify
     // set phpseclib constants if applicable
     $this->setPhpsecConstants();
 
+    $types = (object)array('RS256');
+
     // Check signature
     $certs = $this->getFederatedSignOnCerts();
     foreach ($certs as $cert) {
@@ -103,7 +105,7 @@ class Verify
         $payload = $this->jwt->decode(
             $idToken,
             $this->getPublicKey($cert),
-            array('RS256')
+            $types
         );
 
         if (property_exists($payload, 'aud')) {
